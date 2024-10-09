@@ -1,0 +1,40 @@
+{
+  "compilerOptions": {
+    "plugins": [],
+    "typeRoots": ["types", "./node_modules/@types"],
+    "baseUrl": "./",
+    "paths": {
+      "~*": ["./src/*"]
+    },
+    "target": "ES2020",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "strictPropertyInitialization": false,
+    "forceConsistentCasingInFileNames": true,
+    // strictNullChecks must be enabled for type inference to work for Yup
+    "strictNullChecks": true,
+    "noEmit": true,
+    "noImplicitReturns": true,
+    "esModuleInterop": true,
+    "noImplicitAny": false,
+    "experimentalDecorators": true,
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "noUncheckedIndexedAccess": false,
+    "allowUmdGlobalAccess": true,
+    "strictBindCallApply": true,
+    "useDefineForClassFields": true,
+    "noPropertyAccessFromIndexSignature": false,
+    "verbatimModuleSyntax": true,
+    "downlevelIteration": true,
+    "importHelpers": true
+  },
+  "exclude": ["node_modules", "test", "public", "**/*.spec.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"]
+}

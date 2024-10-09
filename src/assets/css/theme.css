@@ -1,0 +1,17 @@
+@import url('tailwindcss/base');
+@import url('tailwindcss/components');
+@import url('tailwindcss/utilities');
+
+@layer base {
+  html {
+    @apply scroll-smooth;
+  }
+}
+
+@layer components {
+  /* empty */
+}
+
+@layer utilities {
+  /* empty */
+}
