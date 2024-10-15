@@ -10,7 +10,7 @@ export default {
   ],
   plugins: [
     nextui({
-      defaultTheme: 'light',
+      defaultTheme: 'light'
     })
 
   ],
@@ -18,8 +18,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        montserrat: 'var(--montserrat)',
-        'neue-haas': 'var(--neue-haas)'
+        'yekan-bakh': 'var(--yekan-bakh)'
       },
       fontSize: {
         '4.5xl': ['42px', '1'],

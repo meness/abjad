@@ -7,6 +7,7 @@ import Head from 'next/head';
 import { type ReactElement } from 'react';
 import '~assets/css/theme.css';
 import { GlobalErrorBoundary } from '~components';
+import { uiConfig } from '~configs';
 import { ThemeProvider } from '~providers';
 
 const AppPage = ({ Component, pageProps }: AppPropsWithLayout) => {
@@ -20,13 +21,13 @@ const AppPage = ({ Component, pageProps }: AppPropsWithLayout) => {
   return (
     <>
       <DefaultSeo
-        title="Abjad"
-        titleTemplate="%s - Abjad"
-        description="Calculate"
+        title="ابجد"
+        titleTemplate="%s - ابجد"
+        description="محاسبه ابجد"
         openGraph={{
           locale: 'en-US',
-          title: 'Abjad',
-          description: 'Calculate',
+          title: 'ابجد',
+          description: 'محاسبه',
           images: []
         }}
       />
@@ -45,6 +46,13 @@ const AppPage = ({ Component, pageProps }: AppPropsWithLayout) => {
           name="viewport"
           content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0"
         />
+        <style>
+          {`
+              :root{
+                --yekan-bakh: ${uiConfig.fonts.yekanBakh.style.fontFamily};
+              }
+          `}
+        </style>
       </Head>
       {getLayout(<Component {...pageProps} />)}
     </>

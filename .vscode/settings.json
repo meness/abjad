@@ -48,6 +48,7 @@
     "Addeds",
     "arbitrum",
     "Autorenew",
+    "bakh",
     "browserslistrc",
     "bunx",
     "chartjs",
@@ -90,6 +91,7 @@
     "walletconnect",
     "walletlink",
     "webp",
+    "yekan",
     "zustand"
   ],
   "css.validate": false,

@@ -1,7 +1,8 @@
 import { Button } from '@nextui-org/button';
-import { Card } from '@nextui-org/card';
+import { Card, CardBody, CardHeader } from '@nextui-org/card';
 import { Chip } from '@nextui-org/chip';
 import { Input } from '@nextui-org/input';
+import { getKeyValue, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from '@nextui-org/table';
 import { NextSeo } from 'next-seo';
 import { useState, type ReactElement } from 'react';
 import { useForm, type Resolver } from 'react-hook-form';
@@ -20,6 +21,21 @@ type CalculatedName = {
   xType: number;
   yType: number;
 };
+
+const columns = [
+  {
+    key: 'name',
+    label: 'اسم'
+  },
+  {
+    key: 'x',
+    label: 'X'
+  },
+  {
+    key: 'y',
+    label: 'Y'
+  }
+];
 
 const resolver: Resolver<FormValues> = async (values) => {
   return {
@@ -47,6 +63,15 @@ const IndexPage = () => {
   const onSubmit = handleSubmit(({ motherName, yourName }) => {
     const motherNameAbjad = calculateAbjad(motherName);
     const yourNameAbjad = calculateAbjad(yourName);
+
+    if (
+      calculatedNames.some((name) => {
+        return name.name.toLowerCase() === yourName.toLowerCase();
+      })
+    ) {
+      return;
+    }
+
     const x = (motherNameAbjad + yourNameAbjad) / 4;
     const y = (motherNameAbjad + yourNameAbjad) / 3;
 
@@ -56,55 +81,88 @@ const IndexPage = () => {
   });
 
   return (
-    <div className="flex h-svh w-svw place-content-center place-items-center">
-      <NextSeo title="Calculate" />
-      <Card classNames={{ base: 'max-w-md grow p-5' }}>
-        <form
-          onSubmit={onSubmit}
-          className="flex flex-col gap-2">
-          <Input
-            {...register('motherName')}
-            label="اسم مادر"
-            fullWidth={false}
-            placeholder="زرین"
-          />
-          <Input
-            {...register('yourName')}
-            label="اسم خودت"
-            placeholder="مهتاب"
-          />
-          <Button
-            type="submit"
-            fullWidth
-            isDisabled={!formState.isValid}
-            color="primary"
-            variant="shadow">
-            محاسبه
-          </Button>
-        </form>
-        <div className="mt-10 flex flex-wrap gap-4">
-          {calculatedNames.map((name) => {
-            return (
-              <div
-                key={name.name}
-                className="flex items-center gap-2">
-                {name.name}
-                <Chip
-                  variant="flat"
-                  size="sm"
-                  color="success">
-                  {calculateType(name.xType)} / {formatNum(name.x)}
-                </Chip>
-                <Chip
-                  variant="flat"
-                  size="sm"
-                  color="danger">
-                  {calculateType(name.yType)} / {formatNum(name.y)}
-                </Chip>
-              </div>
-            );
-          })}
-        </div>
+    <div className="my-10 flex flex-col place-content-center place-items-center gap-6">
+      <NextSeo title="محاسبه" />
+      <Card
+        fullWidth
+        classNames={{ base: 'max-w-2xl' }}>
+        <CardHeader>محاسبه ابجد</CardHeader>
+        <CardBody>
+          <form
+            onSubmit={onSubmit}
+            className="flex flex-col gap-2">
+            <Input
+              {...register('motherName')}
+              label="اسم مادر"
+              fullWidth={false}
+              placeholder="زرین"
+            />
+            <Input
+              {...register('yourName')}
+              label="اسم خودت"
+              placeholder="مهتاب"
+            />
+            <Button
+              type="submit"
+              fullWidth
+              isDisabled={!formState.isValid}
+              color="primary"
+              variant="shadow">
+              محاسبه
+            </Button>
+          </form>
+        </CardBody>
+      </Card>
+      <Card
+        fullWidth
+        classNames={{ base: 'max-w-2xl' }}>
+        <CardHeader>اسامی محاسبه‌شده</CardHeader>
+        <CardBody>
+          <Table shadow="none" isStriped removeWrapper>
+            <TableHeader columns={columns}>
+              {(column) => {
+                return <TableColumn key={column.key}>{column.label}</TableColumn>;
+              }}
+            </TableHeader>
+            <TableBody
+              emptyContent="هنوز اسمی محاسبه نکردید!"
+              items={calculatedNames}>
+              {(item) => {
+                return (
+                  <TableRow key={item.name}>
+                    {(columnKey) => {
+                      if (columnKey === 'x') {
+                        return (
+                          <TableCell>
+                            <Chip
+                              variant="flat"
+                              color="success">
+                              {calculateType(item.xType)} / {formatNum(item.x)}
+                            </Chip>
+                          </TableCell>
+                        );
+                      }
+
+                      if (columnKey === 'y') {
+                        return (
+                          <TableCell>
+                            <Chip
+                              variant="flat"
+                              color="danger">
+                              {calculateType(item.yType)} / {formatNum(item.y)}
+                            </Chip>
+                          </TableCell>
+                        );
+                      }
+
+                      return <TableCell>{getKeyValue(item, columnKey)}</TableCell>;
+                    }}
+                  </TableRow>
+                );
+              }}
+            </TableBody>
+          </Table>
+        </CardBody>
       </Card>
     </div>
   );
