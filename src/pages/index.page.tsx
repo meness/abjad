@@ -100,7 +100,7 @@ const IndexPage = () => {
             <Input
               {...register('yourName')}
               label="اسم خودت"
-              placeholder="مهتاب"
+              placeholder="آوا"
             />
             <Button
               type="submit"
